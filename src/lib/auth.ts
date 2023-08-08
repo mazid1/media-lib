@@ -1,45 +1,34 @@
-import {
-  CreateUserByUsernameDocument,
-  GetUserByUsernameDocument,
-} from "@/generated/graphql";
 import { grafbase } from "@/lib/gqlClient";
-import { compare, hash } from "bcrypt";
-import Credentials from "next-auth/providers/credentials";
+import { compare } from "bcrypt";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
+import { GetUserByEmailDocument } from "@/generated/graphql";
 
 export const authOptions: NextAuthOptions = {
-  secret: process.env.NEXT_AUTH_SECRET,
   providers: [
-    Credentials({
-      name: "Credentials",
+    CredentialsProvider({
+      name: "credentials",
       credentials: {
-        username: {
-          label: "Username",
-          type: "text",
-          placeholder: "username",
+        email: {
+          label: "Email address",
+          type: "email",
+          placeholder: "jon.doe@example.com",
         },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const { username, password } = credentials as {
-          username: string;
-          password: string;
-        };
+        const { email, password } = credentials ?? {};
 
-        const { user } = await grafbase.request(GetUserByUsernameDocument, {
-          username,
+        if (!email || !password) {
+          throw new Error("Wrong credentials. Try again.");
+        }
+
+        const { user } = await grafbase.request(GetUserByEmailDocument, {
+          email,
         });
 
         if (!user) {
-          const { userCreate } = await grafbase.request(
-            CreateUserByUsernameDocument,
-            {
-              username,
-              passwordHash: await hash(password, 12),
-            }
-          );
-
-          return userCreate?.user;
+          throw new Error("Wrong credentials. Try again.");
         }
 
         const isValid = await compare(password, user.passwordHash);
@@ -48,8 +37,13 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Wrong credentials. Try again.");
         }
 
-        return { id: user.id, username: user.username };
+        return { id: user.id, name: user.name, email: user.email };
       },
     }),
   ],
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  debug: process.env.NODE_ENV === "development",
 };

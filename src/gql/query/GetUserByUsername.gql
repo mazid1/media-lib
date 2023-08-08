@@ -1,7 +1,0 @@
-query GetUserByUsername($username: String!) {
-  user(by: { username: $username }) {
-    id
-    username
-    passwordHash
-  }
-}

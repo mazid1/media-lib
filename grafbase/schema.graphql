@@ -29,7 +29,8 @@
 # }
 
 type User @model {
-  username: String! @unique
+  name: String!
+  email: Email! @unique
   passwordHash: String!
 
   # Extend models with resolvers

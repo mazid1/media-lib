@@ -1,8 +1,0 @@
-mutation CreateUserByUsername($username: String!, $passwordHash: String!) {
-  userCreate(input: { username: $username, passwordHash: $passwordHash }) {
-    user {
-      id
-      username
-    }
-  }
-}
