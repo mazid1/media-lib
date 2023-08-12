@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import AuthLinks from "./AuthLinks";
+import UserMenu from "./UserMenu";
 
 function Navbar() {
   return (
@@ -20,6 +21,7 @@ function Navbar() {
       </div>
       <div className="navbar-end">
         <AuthLinks />
+        <UserMenu />
       </div>
     </nav>
   );
