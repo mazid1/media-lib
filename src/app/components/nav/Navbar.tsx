@@ -6,10 +6,10 @@ function Navbar() {
   return (
     <nav className="navbar bg-base-100">
       <div className="navbar-start">
-        <Link className="btn btn-ghost normal-case text-xl" href="/">
+        <Link className="normal-case text-2xl font-bold" href="/">
           MediaLib
         </Link>
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal px-2">
           <li>
             <Link href="/movies">Movies</Link>
           </li>

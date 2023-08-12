@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="dracula">
-      <body>
+      <body className="max-w-7xl mx-auto">
         <NextAuthProvider>
           <Navbar />
           {children}

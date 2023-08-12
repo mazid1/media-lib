@@ -1,8 +1,6 @@
-import AuthLinks from "./components/nav/AuthLinks";
-
 export default async function Home() {
   return (
-    <main>
+    <main className="px-2">
       <h1>Home page</h1>
     </main>
   );

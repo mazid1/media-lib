@@ -16,7 +16,7 @@ function UserMenu(props: UserMenuProps) {
 
   return (
     <div className="dropdown dropdown-end">
-      <div tabIndex={0} className="avatar flex btn btn-ghost">
+      <div tabIndex={0} className="avatar flex hover:cursor-pointer">
         <div className="w-8 h-8 rounded-full">{avatarImage}</div>
       </div>
       <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box">
