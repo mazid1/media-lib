@@ -1,17 +1,19 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import UserMenu from "./UserMenu";
 
 function AuthLinks() {
   const { data: session } = useSession();
 
-  if (session) {
+  if (session?.user) {
     return (
-      <>
-        Signed in as {session?.user?.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
+      <UserMenu
+        name={session.user.name!}
+        email={session.user.email!}
+        image={session.user.image}
+      />
     );
   }
 
