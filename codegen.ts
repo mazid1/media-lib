@@ -13,7 +13,11 @@ const config: CodegenConfig = {
   generates: {
     "src/generated/": {
       preset: "client",
-      plugins: [],
+      plugins: [
+        "typescript",
+        "typescript-operations",
+        "typescript-react-apollo",
+      ],
     },
   },
   hooks: { afterAllFileWrite: ["eslint --fix"] },
