@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import NextAuthProvider from "../context/NextAuthProvider";
 import Navbar from "./components/nav/Navbar";
+import { ApolloProvider } from "@/context/ApolloProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,10 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="dracula">
       <body className="max-w-7xl mx-auto">
-        <NextAuthProvider>
-          <Navbar />
-          {children}
-        </NextAuthProvider>
+        <ApolloProvider>
+          <NextAuthProvider>
+            <Navbar />
+            {children}
+          </NextAuthProvider>
+        </ApolloProvider>
       </body>
     </html>
   );
