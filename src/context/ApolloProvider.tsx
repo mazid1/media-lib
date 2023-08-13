@@ -10,9 +10,9 @@ import {
 
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: process.env.GRAFBASE_API_URL,
+    uri: process.env.NEXT_PUBLIC_GRAFBASE_API_URL,
     headers: {
-      "x-api-key": process.env.GRAFBASE_API_KEY as string,
+      "x-api-key": process.env.NEXT_PUBLIC_GRAFBASE_API_KEY as string,
     },
   });
 
@@ -27,6 +27,7 @@ function makeClient() {
             httpLink,
           ])
         : httpLink,
+    connectToDevTools: process.env.NODE_ENV === "development",
   });
 }
 
