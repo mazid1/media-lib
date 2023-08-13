@@ -38,6 +38,25 @@ type User @model {
   # gravatar: URL @resolver(name: "user/gravatar")
 }
 
+extend schema
+  @graphql(
+    namespace: "anilist"
+    url: "https://graphql.anilist.co"
+    transforms: { exclude: ["Mutation.*"] }
+  )
+  @openapi(
+    namespace: "tmdb"
+    schema: "{{ env.TMDB_SCHEMA_URL }}"
+    url: "https://api.themoviedb.org"
+    headers: [
+      { name: "Authorization", value: "Bearer {{ env.TMDB_KEY }}" }
+      { name: "accept", value: "application/json" }
+    ]
+    transforms: { exclude: ["Mutation.*"] }
+  ) {
+  query: Query
+}
+
 # Start your backend
 # https://grafbase.com/docs/cli
 # npx grafbase dev
