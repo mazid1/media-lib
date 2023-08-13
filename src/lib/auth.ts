@@ -1,8 +1,12 @@
-import { grafbase } from "@/lib/gqlClient";
 import { compare } from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
-import { GetUserByEmailDocument } from "@/generated/graphql";
+import {
+  GetUserByEmailDocument,
+  GetUserByEmailQuery,
+  GetUserByEmailQueryVariables,
+} from "@/generated/gql";
+import { getClient } from "./apolloClient";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -18,14 +22,23 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         const { email, password } = credentials ?? {};
+        const client = getClient();
 
         if (!email || !password) {
           throw new Error("Wrong credentials. Try again.");
         }
 
-        const { user } = await grafbase.request(GetUserByEmailDocument, {
-          email,
+        const queryResponse = await client.query<
+          GetUserByEmailQuery,
+          GetUserByEmailQueryVariables
+        >({
+          query: GetUserByEmailDocument,
+          variables: {
+            email,
+          },
         });
+
+        const user = queryResponse.data?.user;
 
         if (!user) {
           throw new Error("Wrong credentials. Try again.");
