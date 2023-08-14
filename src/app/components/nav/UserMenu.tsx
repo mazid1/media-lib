@@ -1,4 +1,5 @@
 import { signOut } from "next-auth/react";
+import Image from "next/image";
 import React from "react";
 
 type UserMenuProps = {
@@ -11,8 +12,11 @@ function UserMenu(props: UserMenuProps) {
   const { name, email, image } = props;
 
   const avatarSrc =
-    image ?? `https://ui-avatars.com/api/?name=${name.split(" ").join("+")}`;
-  const avatarImage = <img src={avatarSrc} />;
+    image ??
+    `https://ui-avatars.com/api/?rounded=true&bold=true&format=png&name=${name
+      .split(" ")
+      .join("+")}`;
+  const avatarImage = <Image src={avatarSrc} alt="dp" width={32} height={32} />;
 
   return (
     <div className="dropdown dropdown-end">
