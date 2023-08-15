@@ -10,6 +10,7 @@ import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import Image from "next/image";
+import Paginator from "../Paginator";
 
 function MovieList() {
   const [page, setPage] = useState(1);
@@ -22,9 +23,19 @@ function MovieList() {
   });
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col m-6 gap-6">
+      <div className="flex justify-center">
+        <Paginator
+          currentPage={page}
+          totalPages={Math.min(
+            data?.tmdb.moviePopularList?.totalPages ?? 0,
+            500
+          )}
+          onPageSelect={(selectedPage) => setPage(selectedPage)}
+        />
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
-        {data.tmdb.moviePopularList?.results?.map((movie) => (
+        {data?.tmdb.moviePopularList?.results?.map((movie) => (
           <div
             key={movie.id}
             className="card shadow-xl bg-base-200 max-w-[342px]"
@@ -50,6 +61,16 @@ function MovieList() {
             </div>
           </div>
         ))}
+      </div>
+      <div className="flex justify-center">
+        <Paginator
+          currentPage={page}
+          totalPages={Math.min(
+            data?.tmdb.moviePopularList?.totalPages ?? 0,
+            500
+          )}
+          onPageSelect={(selectedPage) => setPage(selectedPage)}
+        />
       </div>
     </div>
   );
