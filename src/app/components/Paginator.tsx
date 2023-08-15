@@ -26,18 +26,22 @@ function Paginator({ currentPage, totalPages, onPageSelect }: PaginatorProps) {
       )}
       {Array(5)
         .fill(0)
-        .map((_, i) => (
-          <button
-            className={
-              "join-item btn btn-primary btn-sm md:btn-md" +
-              (currentPage === i + firstVisiblePage ? " btn-active" : "")
-            }
-            key={i + firstVisiblePage}
-            onClick={() => onPageSelect(i + firstVisiblePage)}
-          >
-            {i + firstVisiblePage}
-          </button>
-        ))}
+        .map((_, i) => {
+          const thisPage = i + firstVisiblePage;
+          if (thisPage > totalPages) return null;
+          return (
+            <button
+              className={
+                "join-item btn btn-primary btn-sm md:btn-md" +
+                (currentPage === thisPage ? " btn-active" : "")
+              }
+              key={thisPage}
+              onClick={() => onPageSelect(thisPage)}
+            >
+              {thisPage}
+            </button>
+          );
+        })}
       {!isVisibleLastPage && (
         <button
           className="join-item btn btn-primary btn-sm md:btn-md"
