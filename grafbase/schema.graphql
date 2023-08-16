@@ -1,49 +1,23 @@
-# Welcome to Grafbase!
-# Define your data models, integrate auth, permission rules, custom resolvers, search, and more with Grafbase.
-
-# Integrate Auth
-# https://grafbase.com/docs/auth
-#
-# schema @auth(providers: [{ type: oidc, issuer: "{{ env.ISSUER_URL }}" }], rules: [{ allow: private }]) {
-#   query: Query
-# }
-
-# Define Data Models
-# https://grafbase.com/docs/database
-# type Post @model @search {
-#   title: String!
-#   slug: String! @unique
-#   content: String
-#   publishedAt: DateTime
-#   comments: [Comment]
-#   likes: Int @default(value: 0)
-#   tags: [String] @length(max: 5)
-#   author: User
-# }
-
-# type Comment @model @search {
-#   post: Post!
-#   body: String!
-#   likes: Int @default(value: 0)
-#   author: User
-# }
+type Favorites {
+  movies: [String!]! @default(value: [])
+  animes: [String!]! @default(value: [])
+}
 
 type User @model {
   name: String!
   email: Email! @unique
   passwordHash: String!
-
-  # Extend models with resolvers
-  # https://grafbase.com/docs/edge-gateway/resolvers
-  # gravatar: URL @resolver(name: "user/gravatar")
+  favorites: Favorites!
+    @default(value: { movies: [], animes: [] })
+    @auth(rules: [{ allow: private, operations: ["read", "create", "update"] }])
 }
 
 extend schema
-  @graphql(
-    namespace: "anilist"
-    url: "https://graphql.anilist.co"
-    transforms: { exclude: ["Mutation.*"] }
-  )
+  # @graphql(
+  #   namespace: "anilist"
+  #   url: "https://graphql.anilist.co"
+  #   transforms: { exclude: ["Mutation.*"] }
+  # )
   @openapi(
     namespace: "tmdb"
     schema: "{{ env.TMDB_SCHEMA_URL }}"
@@ -56,8 +30,24 @@ extend schema
   )
   @cache(
     rules: [{ types: ["TmdbQuery"], maxAge: 300, staleWhileRevalidate: 300 }]
+  )
+  @auth(
+    providers: [
+      {
+        type: jwt
+        issuer: "{{ env.ISSUER_URL }}"
+        secret: "{{ env.NEXTAUTH_SECRET }}"
+      }
+    ]
   ) {
   query: Query
+}
+
+extend type TmdbMoviePopularListResults @model {
+  isFavorite: Boolean!
+    @default(value: false)
+    @resolver(name: "tmdb/MoviePopularListResults/isFavorite")
+    @auth(rules: [{ allow: private, operations: ["read", "create", "update"] }])
 }
 
 # Start your backend

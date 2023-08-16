@@ -7,6 +7,8 @@ import {
   GetUserByEmailQueryVariables,
 } from "@/generated/gql";
 import { getClient } from "./apolloClient";
+import jsonwebtoken from "jsonwebtoken";
+import { JWT } from "next-auth/jwt";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -54,6 +56,23 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  jwt: {
+    encode: ({ secret, token }) => {
+      const encodedToken = jsonwebtoken.sign(
+        {
+          ...token,
+          iss: process.env.ISSUER_URL,
+          exp: Math.floor(Date.now() / 1000) + 60 * 60,
+        },
+        secret
+      );
+      return encodedToken;
+    },
+    decode: async ({ secret, token }) => {
+      const decodedToken = jsonwebtoken.verify(token!, secret);
+      return decodedToken as JWT;
+    },
+  },
   session: {
     strategy: "jwt",
   },
