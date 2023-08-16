@@ -43,11 +43,10 @@ extend schema
   query: Query
 }
 
-extend type TmdbMoviePopularListResults @model {
+extend type TmdbMoviePopularListResults {
   isFavorite: Boolean!
     @default(value: false)
     @resolver(name: "tmdb/MoviePopularListResults/isFavorite")
-    @auth(rules: [{ allow: private, operations: ["read", "create", "update"] }])
 }
 
 # Start your backend
