@@ -2,9 +2,9 @@ import { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
   schema: {
-    [process.env.GRAFBASE_API_URL!]: {
+    [process.env.NEXT_PUBLIC_GRAFBASE_API_URL!]: {
       headers: {
-        "x-api-key": process.env.GRAFBASE_API_KEY,
+        "x-api-key": process.env.NEXT_PUBLIC_GRAFBASE_API_KEY,
       },
     },
   },
