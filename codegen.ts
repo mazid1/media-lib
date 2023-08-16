@@ -7,7 +7,7 @@ const config: CodegenConfig = {
         "x-api-key": process.env.NEXT_PUBLIC_GRAFBASE_API_KEY,
       },
     },
-  },
+  } as any,
   documents: ["src/**/*.gql"],
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
