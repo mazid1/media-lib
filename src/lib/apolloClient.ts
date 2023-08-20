@@ -7,6 +7,9 @@ import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rs
 
 // https://www.apollographql.com/blog/apollo-client/next-js/how-to-use-apollo-client-with-next-js-13/
 
+/**
+ * This client is intended to be used in the server component only
+ */
 export const { getClient } = registerApolloClient(() => {
   return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache(),

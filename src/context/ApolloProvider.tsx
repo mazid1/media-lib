@@ -10,7 +10,7 @@ import {
 
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: process.env.NEXT_PUBLIC_GRAFBASE_API_URL,
+    uri: "/graphql",
     headers: {
       "x-api-key": process.env.NEXT_PUBLIC_GRAFBASE_API_KEY as string,
     },
