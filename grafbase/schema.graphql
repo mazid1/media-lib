@@ -26,6 +26,9 @@ extend schema
       { name: "Authorization", value: "Bearer {{ env.TMDB_KEY }}" }
       { name: "accept", value: "application/json" }
     ]
+    introspectionHeaders: [
+      { name: "Authorization", value: "Bearer {{ env.TMDB_KEY }}" }
+    ]
     transforms: { exclude: ["Mutation.*"] }
   )
   @cache(
