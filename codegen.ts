@@ -11,7 +11,7 @@ const config: CodegenConfig = {
   documents: ["src/**/*.gql"],
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
-    "src/generated/gql.tsx": {
+    "__generated__/types.tsx": {
       config: {
         reactApolloVersion: 3,
         withHooks: true,
@@ -26,6 +26,7 @@ const config: CodegenConfig = {
       plugins: [
         "typescript",
         "typescript-operations",
+        "typescript-resolvers",
         "typescript-react-apollo",
       ],
     },

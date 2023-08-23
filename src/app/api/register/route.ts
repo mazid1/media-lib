@@ -5,8 +5,8 @@ import {
   GetUserByEmailQueryVariables,
   RegisterUserMutation,
   RegisterUserMutationVariables,
-} from "@/generated/gql";
-import { RegisterUserDocument } from "@/generated/gql";
+  RegisterUserDocument,
+} from "@/__generated__/types";
 import { hash } from "bcrypt";
 import { getClient } from "@/lib/apolloClient";
 

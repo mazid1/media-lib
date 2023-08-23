@@ -5,7 +5,7 @@ import {
   GetUserByEmailDocument,
   GetUserByEmailQuery,
   GetUserByEmailQueryVariables,
-} from "@/generated/gql";
+} from "@/__generated__/types";
 import { getClient } from "./apolloClient";
 import jsonwebtoken from "jsonwebtoken";
 import { JWT } from "next-auth/jwt";

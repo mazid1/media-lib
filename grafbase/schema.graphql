@@ -1,15 +1,46 @@
-type Favorites {
-  movies: [String!]! @default(value: [])
-  animes: [String!]! @default(value: [])
+type Favorite {
+  id: ID!
+  movies: [Int!]!
+  # animes: [String!]! @default(value: [])
+  createdBy: User!
 }
 
-type User @model {
+type User {
+  id: ID!
   name: String!
-  email: Email! @unique
+  email: Email!
   passwordHash: String!
-  favorites: Favorites!
-    @default(value: { movies: [], animes: [] })
-    @auth(rules: [{ allow: private, operations: ["read", "create", "update"] }])
+}
+
+type UserCreateResult {
+  user: User!
+}
+
+input ToggleFavMovieInput {
+  movieId: Int!
+  userId: ID!
+}
+
+input UserGetInput {
+  email: Email!
+}
+
+input UserCreateInput {
+  name: String!
+  email: Email!
+  passwordHash: String!
+}
+
+extend type Query {
+  user(input: UserGetInput!): User @resolver(name: "user/query/user")
+}
+
+extend type Mutation {
+  userCreate(input: UserCreateInput!): UserCreateResult
+    @resolver(name: "user/mutation/userCreate")
+
+  userToggleFavMovie(input: ToggleFavMovieInput!): [Int!]!
+    @resolver(name: "user/toggleFavMovie")
 }
 
 extend schema
@@ -44,12 +75,6 @@ extend schema
     ]
   ) {
   query: Query
-}
-
-extend type TmdbMoviePopularListResults {
-  isFavorite: Boolean!
-    @default(value: false)
-    @resolver(name: "tmdb/MoviePopularListResults/isFavorite")
 }
 
 # Start your backend

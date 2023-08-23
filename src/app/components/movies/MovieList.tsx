@@ -4,7 +4,7 @@ import {
   MoviePopularListDocument,
   MoviePopularListQuery,
   MoviePopularListQueryVariables,
-} from "@/generated/gql";
+} from "@/__generated__/types";
 import { getPosterUrl } from "@/lib/tmdbImage";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import React, { useState } from "react";
