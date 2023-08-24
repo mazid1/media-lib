@@ -1,14 +1,9 @@
 import { compare } from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
-import {
-  GetUserByEmailDocument,
-  GetUserByEmailQuery,
-  GetUserByEmailQueryVariables,
-} from "@/__generated__/types";
-import { getClient } from "./apolloClient";
 import jsonwebtoken from "jsonwebtoken";
 import { JWT } from "next-auth/jwt";
+import prisma from "./prisma";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -24,23 +19,12 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         const { email, password } = credentials ?? {};
-        const client = getClient();
 
         if (!email || !password) {
           throw new Error("Wrong credentials. Try again.");
         }
 
-        const queryResponse = await client.query<
-          GetUserByEmailQuery,
-          GetUserByEmailQueryVariables
-        >({
-          query: GetUserByEmailDocument,
-          variables: {
-            email,
-          },
-        });
-
-        const user = queryResponse.data?.user;
+        const user = await prisma.user.findUnique({ where: { email } });
 
         if (!user) {
           throw new Error("Wrong credentials. Try again.");
@@ -52,7 +36,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Wrong credentials. Try again.");
         }
 
-        return { id: user.id, name: user.name, email: user.email };
+        return { ...user, passwordHash: undefined };
       },
     }),
   ],
