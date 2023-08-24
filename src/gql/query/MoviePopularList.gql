@@ -1,23 +1,21 @@
 query MoviePopularList($page: Int = 1) {
-  tmdb {
-    moviePopularList(page: $page) {
-      page
-      totalPages
-      totalResults
-      results {
-        id
-        title
-        originalTitle
-        originalLanguage
-        overview
-        posterPath
-        backdropPath
-        releaseDate
-        genreIds
-        voteCount
-        voteAverage
-        adult
-      }
+  moviePopularList(page: $page) {
+    page
+    totalPages
+    totalResults
+    results {
+      id
+      title
+      originalTitle
+      originalLanguage
+      overview
+      posterPath
+      backdropPath
+      releaseDate
+      genreIds
+      voteCount
+      voteAverage
+      adult
     }
   }
 }

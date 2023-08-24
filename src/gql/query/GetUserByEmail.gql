@@ -1,8 +1,0 @@
-query GetUserByEmail($email: Email!) {
-  user(input: { email: $email }) {
-    id
-    name
-    email
-    passwordHash
-  }
-}
