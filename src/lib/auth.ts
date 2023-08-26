@@ -4,6 +4,7 @@ import { NextAuthOptions, Session } from "next-auth";
 import jsonwebtoken from "jsonwebtoken";
 import { JWT } from "next-auth/jwt";
 import prisma from "./prisma";
+import { SessionUser } from "./types";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -65,12 +66,6 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     session: async ({ session, token }) => {
-      type SessionUser = {
-        id?: string | null;
-        name?: string | null;
-        email?: string | null;
-        image?: string | null;
-      };
       session.user = {
         ...session.user,
         id: token.userId as string,
