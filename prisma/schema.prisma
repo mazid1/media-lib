@@ -21,10 +21,12 @@ model User {
 
 model Favorite {
   id          Int       @id @default(autoincrement())
-  mediaId     Int
+  mediaId     String
   mediaType   MediaType
   createdBy   User      @relation(fields: [createdById], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  createdById Int       @unique
+  createdById Int
+
+  @@unique([createdById, mediaId, mediaType], name: "favoriteUnique")
 }
 
 enum MediaType {
