@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-const GRAFBASE_URL = process.env.NEXT_PUBLIC_GRAFBASE_API_URL;
+const HASURA_URL = process.env.NEXT_PUBLIC_HASURA_API_URL;
 
 const nextConfig = {
   images: {
@@ -9,8 +9,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/graphql",
-        destination: GRAFBASE_URL,
+        source: "/v1/graphql",
+        destination: HASURA_URL,
       },
     ];
   },

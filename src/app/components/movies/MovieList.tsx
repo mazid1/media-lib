@@ -27,36 +27,33 @@ function MovieList() {
       <div className="flex justify-center">
         <Paginator
           currentPage={page}
-          totalPages={Math.min(
-            data?.tmdb.moviePopularList?.totalPages ?? 0,
-            500
-          )}
+          totalPages={Math.min(data?.moviePopularList?.totalPages ?? 0, 500)}
           onPageSelect={(selectedPage) => setPage(selectedPage)}
         />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
-        {data?.tmdb.moviePopularList?.results?.map((movie) => (
+        {data?.moviePopularList?.results?.map((movie) => (
           <div
-            key={movie.id}
+            key={movie?.id}
             className="card shadow-xl bg-base-200 max-w-[342px]"
           >
             <figure>
               <Image
                 src={getPosterUrl({
                   fileSize: "w342",
-                  filePath: movie.posterPath!,
+                  filePath: movie?.posterPath!,
                 })}
-                alt={movie.title!}
+                alt={movie?.title!}
                 width={342}
                 height={513}
               />
             </figure>
             <div className="p-4 flex flex-col gap-2">
               <h2 className="font-semibold text-base text-accent">
-                {movie.title}
+                {movie?.title}
               </h2>
               <p className="text-sm text-neutral-content">
-                {dayjs(movie.releaseDate).format("MMM DD, YYYY")}
+                {dayjs(movie?.releaseDate).format("MMM DD, YYYY")}
               </p>
             </div>
           </div>
@@ -65,10 +62,7 @@ function MovieList() {
       <div className="flex justify-center">
         <Paginator
           currentPage={page}
-          totalPages={Math.min(
-            data?.tmdb.moviePopularList?.totalPages ?? 0,
-            500
-          )}
+          totalPages={Math.min(data?.moviePopularList?.totalPages ?? 0, 500)}
           onPageSelect={(selectedPage) => setPage(selectedPage)}
         />
       </div>

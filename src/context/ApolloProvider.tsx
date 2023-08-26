@@ -12,11 +12,8 @@ function makeClient() {
   const httpLink = new HttpLink({
     uri:
       typeof window === "undefined"
-        ? process.env.NEXT_PUBLIC_GRAFBASE_API_URL
+        ? process.env.NEXT_PUBLIC_HASURA_API_URL
         : `${window.location.origin}/graphql`,
-    headers: {
-      "x-api-key": process.env.NEXT_PUBLIC_GRAFBASE_API_KEY as string,
-    },
   });
 
   return new NextSSRApolloClient({

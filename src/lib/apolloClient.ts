@@ -15,12 +15,12 @@ export const { getClient } = registerApolloClient(() => {
     cache: new NextSSRInMemoryCache(),
     link: new HttpLink({
       // this needs to be an absolute url, as relative urls cannot be used in SSR
-      uri: process.env.NEXT_PUBLIC_GRAFBASE_API_URL,
+      uri: process.env.NEXT_PUBLIC_HASURA_API_URL,
       // you can disable result caching here if you want to
       // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
       // fetchOptions: { cache: "no-store" },
       headers: {
-        "x-api-key": process.env.NEXT_PUBLIC_GRAFBASE_API_KEY as string,
+        "x-hasura-admin-secret": process.env.HASURA_ADMIN_SECRET as string,
       },
     }),
   });
