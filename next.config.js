@@ -9,7 +9,7 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/v1/graphql",
+        source: "/graphql",
         destination: HASURA_URL,
       },
     ];
