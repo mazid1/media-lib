@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { MediaType } from "@prisma/client";
+import { MediaType, Favorite } from "@prisma/client";
 
-export async function GET(req: NextRequest) {
+type FavoritesOutput = {
+  MOVIE?: Favorite[];
+  ANIME?: Favorite[];
+};
+
+export async function GET(
+  req: NextRequest
+): Promise<NextResponse<FavoritesOutput>> {
   const mediaTypes = req.nextUrl.searchParams.getAll(
     "mediaType"
   ) as MediaType[];
@@ -17,5 +24,10 @@ export async function GET(req: NextRequest) {
     favorites = await prisma.favorite.findMany();
   }
 
-  return NextResponse.json(favorites);
+  const output: FavoritesOutput = {};
+  for (const mType of mediaTypes) {
+    output[mType] = favorites.filter((f) => f.mediaType === mType);
+  }
+
+  return NextResponse.json(output);
 }
