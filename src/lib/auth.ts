@@ -1,6 +1,6 @@
 import { compare } from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, Session } from "next-auth";
 import jsonwebtoken from "jsonwebtoken";
 import { JWT } from "next-auth/jwt";
 import prisma from "./prisma";
@@ -55,6 +55,27 @@ export const authOptions: NextAuthOptions = {
     decode: async ({ secret, token }) => {
       const decodedToken = jsonwebtoken.verify(token!, secret);
       return decodedToken as JWT;
+    },
+  },
+  callbacks: {
+    jwt: async ({ token, account }) => {
+      if (account && account.provider === "credentials") {
+        token.userId = account.providerAccountId;
+      }
+      return token;
+    },
+    session: async ({ session, token }) => {
+      type SessionUser = {
+        id?: string | null;
+        name?: string | null;
+        email?: string | null;
+        image?: string | null;
+      };
+      session.user = {
+        ...session.user,
+        id: token.userId as string,
+      } as SessionUser;
+      return session;
     },
   },
   session: {
