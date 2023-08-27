@@ -45,3 +45,45 @@ export async function GET(
 
   return NextResponse.json(output);
 }
+
+type FavoriteInput = {
+  mediaType: MediaType;
+  mediaId: string;
+};
+
+export async function POST(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return NextResponse.json(
+      { error: true, message: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+
+  const user = session.user! as SessionUser;
+  const userId = +user.id;
+
+  const favoriteInput = (await req.json()) as FavoriteInput;
+
+  let newFavorite = null;
+  try {
+    newFavorite = await prisma.favorite.create({
+      data: {
+        mediaId: favoriteInput.mediaId,
+        mediaType: favoriteInput.mediaType,
+        createdBy: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
+    });
+    return NextResponse.json(newFavorite, { status: 201 });
+  } catch (e: any) {
+    return NextResponse.json(
+      { error: true, message: e.message },
+      { status: 400 }
+    );
+  }
+}
