@@ -1,34 +1,23 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+I have created this project to play with some popular serverless graphql platforms such as [Hasura](https://hasura.io/), [Grafbase](https://grafbase.com/).
 
-## Getting Started
+The idea is to connect multiple REST/GraphQL APIs using a grahql server. Essentially the root graphql server will act as the API gateway.
 
-First, run the development server:
+## Project Roadmap
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- [x] Use [Hasura](https://hasura.io/) or [Grafbase](https://grafbase.com/) as root GraphQL server. (Currently using Hasura).
+- [x] Use [TMDB API popular movies](https://developer.themoviedb.org/reference/movie-popular-list) for movie list.
+- [ ] Use [TMDB API popular TV series](https://developer.themoviedb.org/reference/tv-series-popular-list) for TV series list.
+- [ ] Use [AniList API](https://anilist.gitbook.io/anilist-apiv2-docs/overview/graphql/getting-started) for list of animes.
+- [x] Authenticate user using [next-auth](https://next-auth.js.org/).
+- [x] Connect to [Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres) for storing user related data.
+- [ ] Store users favorite media content list in database.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Used
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Next.js](https://nextjs.org/)
+- [Apollo GraphQL](https://www.apollographql.com/)
+- [Tailwindcss](https://tailwindcss.com/)
+- [DaisyUI](https://daisyui.com/)
+- [Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres)
+- [Hasura](https://hasura.io/)
+- [Prisma](https://www.prisma.io/)
